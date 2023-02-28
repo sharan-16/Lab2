@@ -13,4 +13,9 @@ module Exercise2 (
     output logic [15:0] out
 );
 
+always @ (posedge clk) begin
+  if (nReset == 0) out <= init;
+  else out <= {out[15:1], out[15] ^ out[13] ^ out[12] ^ out[10]};
+end
+
 endmodule
