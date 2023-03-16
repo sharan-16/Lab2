@@ -21,16 +21,25 @@ module Exercise4 (
     output logic [7:0] out
 );
 
-always_comb begin
-  if (cs == 1b'0) out = 0;
-  else if (cs == 1b'1) begin
-
-    if(sel == 2d'0) out = alpha;
-    else if(sel == 2d'1) out = beta;
-    else if(sel == 2d'2) out = gamma;
-    else if(sel == 2d'3) out = 0;
-    
+always @(*) begin
+    casez({cs,sel[1:0]}) 
+      {1'b0, 2'bzz} : begin
+        out = 0;
+      end
+      {1'b1, 2'b00} : begin
+        out = alpha;
+      end
+      {1'b1, 2'b01} : begin
+        out = beta;
+      end
+      {1'b1, 2'b10} : begin
+        out = gamma;
+      end
+      {1'b1, 2'b11} : begin
+        out = 0;
+      end
+    endcase
   end
-end
+  
 
 endmodule
